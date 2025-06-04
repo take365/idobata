@@ -3,6 +3,8 @@ import Like from "../models/Like.js";
 import Problem from "../models/Problem.js";
 import QuestionLink from "../models/QuestionLink.js";
 import ReportExample from "../models/ReportExample.js";
+import DebateAnalysis from "../models/DebateAnalysis.js";
+import QuestionVisualReport from "../models/QuestionVisualReport.js";
 import SharpQuestion from "../models/SharpQuestion.js";
 import Solution from "../models/Solution.js";
 import { getDebateAnalysis } from "../services/debateAnalysisGenerator.js";
@@ -368,10 +370,37 @@ export const getQuestionsByTheme = async (req, res) => {
   }
 
   try {
-    const questions = await SharpQuestion.find({ themeId }).sort({
-      createdAt: -1,
-    });
-    res.status(200).json(questions);
+    const questions = await SharpQuestion.find({ themeId })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const questionsWithMeta = await Promise.all(
+      questions.map(async (q) => {
+        const [visual, debate, report] = await Promise.all([
+          QuestionVisualReport.findOne({ questionId: q._id })
+            .sort({ createdAt: -1 })
+            .select("createdAt")
+            .lean(),
+          DebateAnalysis.findOne({ questionId: q._id })
+            .sort({ createdAt: -1 })
+            .select("createdAt")
+            .lean(),
+          ReportExample.findOne({ questionId: q._id })
+            .sort({ createdAt: -1 })
+            .select("createdAt")
+            .lean(),
+        ]);
+
+        return {
+          ...q,
+          latestVisualReportAt: visual ? visual.createdAt : null,
+          latestDebateAnalysisAt: debate ? debate.createdAt : null,
+          latestReportExampleAt: report ? report.createdAt : null,
+        };
+      })
+    );
+
+    res.status(200).json(questionsWithMeta);
   } catch (error) {
     console.error(`Error fetching questions for theme ${themeId}:`, error);
     res.status(500).json({
