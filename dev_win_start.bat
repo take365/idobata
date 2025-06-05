@@ -1,13 +1,12 @@
 @echo off
 setlocal
 
-echo Checking MongoDB...
-tasklist | findstr /i "mongod.exe" >nul
+sc query MongoDB | findstr /i "RUNNING" >nul
 if errorlevel 1 (
-    echo MongoDB is not running. Starting it now...
-    start "MongoDB" cmd /k "mongod --dbpath C:\data\db"
+    echo Starting MongoDB service...
+    net start MongoDB
 ) else (
-    echo MongoDB is already running.
+    echo MongoDB service already running.
 )
 
 echo Starting idea-discussion/backend...
