@@ -655,11 +655,6 @@ const ThemeForm: FC<ThemeFormProps> = ({ theme, isEdit = false }) => {
                           >
                             表示
                           </button>
-                          {question.latestVisualReportAt && (
-                            <div className="text-xs text-muted-foreground mt-1">
-                              {formatDate(question.latestVisualReportAt)}
-                            </div>
-                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <button
@@ -704,9 +699,9 @@ const ThemeForm: FC<ThemeFormProps> = ({ theme, isEdit = false }) => {
                               "更新する"
                             )}
                           </button>
-                          {question.latestDebateAnalysisAt && (
+                          {question.latestVisualReportAt && (
                             <div className="text-xs text-muted-foreground mt-1">
-                              {formatDate(question.latestDebateAnalysisAt)}
+                              {formatDate(question.latestVisualReportAt)}
                             </div>
                           )}
                         </td>
@@ -751,9 +746,9 @@ const ThemeForm: FC<ThemeFormProps> = ({ theme, isEdit = false }) => {
                               "更新する"
                             )}
                           </button>
-                          {question.latestReportExampleAt && (
+                          {question.latestDebateAnalysisAt && (
                             <div className="text-xs text-muted-foreground mt-1">
-                              {formatDate(question.latestReportExampleAt)}
+                              {formatDate(question.latestDebateAnalysisAt)}
                             </div>
                           )}
                         </td>
@@ -798,6 +793,11 @@ const ThemeForm: FC<ThemeFormProps> = ({ theme, isEdit = false }) => {
                               "更新する"
                             )}
                           </button>
+                          {question.latestReportExampleAt && (
+                            <div className="text-xs text-muted-foreground mt-1">
+                              {formatDate(question.latestReportExampleAt)}
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}
