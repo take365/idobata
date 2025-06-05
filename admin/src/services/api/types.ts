@@ -131,6 +131,9 @@ export interface Question {
   tags?: string[];
   createdAt: string;
   updatedAt: string;
+  latestVisualReportAt?: string | null;
+  latestDebateAnalysisAt?: string | null;
+  latestReportExampleAt?: string | null;
 }
 
 export interface Problem {
