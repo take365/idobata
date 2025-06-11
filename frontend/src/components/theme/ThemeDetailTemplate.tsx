@@ -129,14 +129,17 @@ const ThemeDetailTemplate = forwardRef<
 
     return (
       <div className="container mx-auto px-4 py-8">
-        <BreadcrumbView items={breadcrumbItems} />
+        <div className="sticky top-[66px] bg-white z-10 pb-4">
+          <BreadcrumbView items={breadcrumbItems} />
 
-        <h1 className="text-2xl md:text-3xl font-bold mb-4">{theme.title}</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-4">{theme.title}</h1>
 
-        <p className="text-base text-muted-foreground mb-8">
-          {theme.description}
-        </p>
+          <p className="text-base text-muted-foreground">
+            {theme.description}
+          </p>
+        </div>
 
+        <div className="mt-8">
         <div className="mb-8">
           <SectionHeading title={`重要論点（${keyQuestions.length}件）`} />
           <div className="space-y-4">
@@ -197,6 +200,8 @@ const ThemeDetailTemplate = forwardRef<
                   />
                 ))}
           </div>
+        </div>
+
         </div>
 
         <FloatingChat

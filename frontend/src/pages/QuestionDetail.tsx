@@ -297,20 +297,23 @@ const QuestionDetail = () => {
     return (
       <>
         <div className="md:mr-[50%]">
-          <div className="container mx-auto px-4 py-8">
-            <BreadcrumbView items={breadcrumbItems} />
+          <div className="sticky top-[66px] bg-white z-10 border-b border-neutral-200">
+            <div className="container mx-auto px-4 py-8">
+              <BreadcrumbView items={breadcrumbItems} />
+              <KeyQuestionHeader
+                question={questionData.question}
+                tagLine={questionData.tagLine}
+                tags={questionData.tags}
+                voteCount={questionData.voteCount}
+                questionId={questionData.id}
+              />
+            </div>
           </div>
-          <KeyQuestionHeader
-            question={questionData.question}
-            tagLine={questionData.tagLine}
-            tags={questionData.tags}
-            voteCount={questionData.voteCount}
-            questionId={questionData.id}
-          />
-          <DebateSummary
-            debateData={debateData}
-            visualReport={questionDetail?.visualReport}
-          />
+          <div className="container mx-auto px-4 py-8">
+            <DebateSummary
+              debateData={debateData}
+              visualReport={questionDetail?.visualReport}
+            />
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <div className="flex-grow">
